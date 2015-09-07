@@ -1,22 +1,19 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
-using ClassLibrary1.Implementions.Interfaces;
 
 namespace ClassLibrary1
 {
-    public class SimpleMefDemo
+    public class ComposeBase
     {
-        [Import]
-        public IMessageSender MessageSender { get; set; }
-
-        public void Run()
+        public ComposeBase()
         {
+            Console.WriteLine("Invoking ComposeBase ctor");
             Compose();
-            MessageSender.Send("Message Sent");
         }
 
-        private void Compose()
+        protected void Compose()
         {
             var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
             var container = new CompositionContainer(catalog);

@@ -15,17 +15,13 @@ namespace ConsoleApplication1
 
         public static void Main(string[] args)
         {
-            new SimpleMefDemo().Run();
+            //new SimpleMefDemo().Run();
+
+            new Notifier().Notify("AAAAAAAAAA");
 
             Console.WriteLine("press any key to continue......");
             Console.ReadKey();
         }
 
     }
-
-
-    
-
-
-
 }

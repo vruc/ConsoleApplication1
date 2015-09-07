@@ -1,4 +1,4 @@
-﻿namespace ClassLibrary1
+﻿namespace ClassLibrary1.Implementions.Interfaces
 {
     public interface IMessageSender
     {
