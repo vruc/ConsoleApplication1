@@ -1,0 +1,19 @@
+﻿
+@model WebApplication1.Controllers.NecklaceAnnotationDto
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Admin Index</h2>
+
+@using (Html.BeginForm("SaveNecklaceAnnotaion", "Admin", FormMethod.Post))
+{
+    @*@Html.TextBoxFor(model => model.NecklaceId)*@
+    @*@Html.TextBoxFor(model => model.Annotation)*@
+
+    <input type="text" name="NecklaceAnnotationDto.NecklaceId" value="" />
+    <input type="text" name="NecklaceAnnotationDto.Annotation" value="" />
+
+    <input type="submit" value="submit"/>
+}

@@ -1,0 +1,15 @@
+﻿@model WebApplication1.Controllers.NecklaceAnnotationDto
+@{
+    ViewBag.Title = "SaveNecklaceAnnotaion";
+}
+
+
+@if (Model != null)
+{
+    <h2>SaveNecklaceAnnotaion Sucessed [@Model.NecklaceId] --> [@Model.Annotation]</h2>
+}
+else
+{
+    <h2>SaveNecklaceAnnotaion Failed</h2>
+}
+
