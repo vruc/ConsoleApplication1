@@ -147,13 +147,24 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\DelayController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
+    <Compile Include="Controllers\V1\HealthCheckController.cs" />
+    <Compile Include="Controllers\V1\LocationController.cs" />
+    <Compile Include="Controllers\V2\LocationController.cs" />
+    <Compile Include="Controllers\V5\UserManagement.cs" />
+    <Compile Include="Controllers\V5\ValuesController.cs" />
+    <Compile Include="Controllers\V6\UserManagement.cs" />
+    <Compile Include="Controllers\V6\ValuesController.cs" />
+    <Compile Include="Controllers\V7\UserManagement.cs" />
+    <Compile Include="Controllers\V7\ValuesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="NamespaceHttpControllerSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
