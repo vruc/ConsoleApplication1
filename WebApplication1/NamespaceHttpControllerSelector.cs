@@ -51,7 +51,8 @@ namespace WebApplication1
                 {
                     var segments = t.Namespace.Split(Type.Delimiter);
 
-                    var controllerName = t.Name.Remove(t.Name.Length - DefaultHttpControllerSelector.ControllerSuffix.Length);
+                    var controllerName =
+                        t.Name.Remove(t.Name.Length - DefaultHttpControllerSelector.ControllerSuffix.Length);
 
                     var key = String.Format("{0}.{1}", segments[segments.Length - 1].ToUpper(), controllerName);
 
@@ -78,7 +79,7 @@ namespace WebApplication1
             object result = null;
             if (routeData.Values.TryGetValue(name, out result))
             {
-                return (T)result;
+                return (T) result;
             }
             return default(T);
         }
@@ -90,7 +91,7 @@ namespace WebApplication1
             {
                 throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
             }
-            
+
             string nameSpace = GetRouteVariable<string>(routeData, NamespaceKey).ToUpper();
             if (string.IsNullOrEmpty(nameSpace))
             {

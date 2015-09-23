@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ using WebGrease.Css.Extensions;
 
 namespace WebApplication1.Controllers
 {
-    public class DocumentController : Controller
+    public class DocumentController : BaseController
     {
         [HttpGet]
         public ActionResult Index()
@@ -87,5 +88,97 @@ namespace WebApplication1.Controllers
         }
     }
 
+
+    public class BaseController : Controller
+    {
+        //private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private readonly IAuthenticationService _authenticationService = ServiceManagerFactory.GetInstance().CreateAuthenticationService();
+        //private readonly ISettingService _settingService = ServiceManagerFactory.GetInstance().CreateSettingService();
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            //var authorization = HttpContext.Request.Headers.Get("Authorization");
+
+            //if (String.IsNullOrEmpty(authorization))
+            //{
+            //    Log.Error("Request without Authorization header");
+            //    filterContext.Result = new HttpUnauthorizedResult();
+            //}
+            //else if (!_authenticationService.ValidateToken(new UserTokenDTO { Token = authorization }))
+            //{
+            //    Log.Error("Request with invalid Authorization header");
+            //    filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+
+            base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
+            
+            var context = filterContext.HttpContext;
+            var sb = new StringBuilder();
+
+            if (context.Request.Url != null)
+            {
+                sb.AppendFormat("{0} {1}", context.Request.RequestType, context.Request.Url.PathAndQuery);
+                sb.Append("\r\n");
+            }
+            else
+            {
+                sb.AppendFormat("{0} {1}", context.Request.RequestType, context.Request.RawUrl);
+                sb.Append("\r\n");
+            }
+
+            context.Request.Headers.AllKeys.ForEach(key =>
+            {
+                var val = context.Request.Headers.GetValues(key);
+                if (val == null) return;
+                sb.Append("\r\n");
+                sb.AppendFormat("{0} : {1}", key, val.Aggregate((a, b) => a + ", " + b));
+            });
+
+
+            if (context.Request.RequestType != "GET")
+            {
+                try
+                {
+                    sb.Append("\r\n");
+                    sb.Append("\r\n");
+
+                    var req = Request.InputStream;
+                    req.Seek(0, SeekOrigin.Begin);
+                    var json = new StreamReader(req).ReadToEnd();
+                    sb.Append(json);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+
+            sb.Append("\r\n");
+            sb.Append("\r\n");
+
+            sb.Append(filterContext.Exception.Message);
+            sb.Append("\r\n");
+            sb.Append("\r\n");
+
+            sb.Append(filterContext.Exception.StackTrace);
+
+            context.Response.StatusCode = 500;
+
+            filterContext.Result = View("Error", new KHandleErrorInfo(filterContext.Exception));
+
+            base.OnException(filterContext);
+
+        }
+
+    }
+    public class KHandleErrorInfo : HandleErrorInfo
+    {
+        public KHandleErrorInfo(Exception exception) : base(exception, " ", " ") { }
+    }
 
 }

@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    ViewBag.Title = "Upload";
+}
+
+<form name="form1" method="post" enctype="multipart/form-data" action="~/api/upload">
+    <div>
+        <label for="CatName">Cat Name</label><br />
+        <input name="CatName" id="CatName" type="text" />
+    </div>
+    <br/>
+    <div>
+        <label>Cat Type</label><br />
+        <div>
+            <input type="radio" name="CatType" value="InDoor" />
+            In Door
+        </div>
+        <div>
+            <input type="radio" name="CatType" value="OutDoor" />
+            Out Door
+        </div>
+    </div>
+    <br />
+    <div>
+        <label for="CatImage">Cat Image</label><br />
+        <input name="CatImage" id="CatImage" type="file" />
+    </div>
+    <br/>
+
+    <div>
+        <br />
+        <input type="submit" value="Submit" />
+    </div>
+</form>
+

@@ -10,6 +10,13 @@ namespace WebApplication1.Controllers.V2
         [HttpPost]
         public HttpResponseMessage GetOverview()
         {
+            var rnd = new Random();
+
+            if (rnd.NextDouble() < 0.5)
+            {
+                throw new Exception("Random Number Smaller Then 0.5.");
+            }
+
             var locationView = new
             {
                 NextUpdateInSeconds = 30,

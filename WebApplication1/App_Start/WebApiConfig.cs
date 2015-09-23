@@ -16,7 +16,7 @@ namespace WebApplication1
             config.Routes.MapHttpRoute(
                 name: "CustomApi",
                 routeTemplate: "api/{version}/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional },
+                defaults: new { id = RouteParameter.Optional, version = "v1" },
                 constraints: new { action = @"[A-Za-z]+" }
             );
 
@@ -26,8 +26,12 @@ namespace WebApplication1
                 defaults: new { id = RouteParameter.Optional, version = "v1", controller = "values" }
             );
 
+            GlobalConfiguration.Configuration.Filters.Add(new CustomExceptionFilterAttribute());
+
             // Use Custom IHttpContollerSelector
             config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
+
+            
 
         }
     }

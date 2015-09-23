@@ -28,10 +28,11 @@ namespace WebApplication1.Controllers.V5
                     Id = id,
                     Name = UserDictionary[id],
                     Token = Guid.NewGuid().ToString()
-                });   
+                });
             }
-
-            return Request.CreateResponse(HttpStatusCode.NotFound, "Resources NotFound");
+            return id < 0
+                ? Request.CreateResponse(HttpStatusCode.InternalServerError)
+                : Request.CreateResponse(HttpStatusCode.NotFound, "Resources NotFound");
         }
 
         [System.Web.Http.HttpGet]

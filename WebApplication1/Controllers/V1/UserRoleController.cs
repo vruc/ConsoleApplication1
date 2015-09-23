@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Controllers.V1
 {
     public class UserRoleController : ApiController
     {

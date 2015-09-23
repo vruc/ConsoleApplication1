@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Controllers.V1
 {
     public class DelayController : ApiController
     {
