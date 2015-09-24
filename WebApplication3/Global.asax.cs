@@ -35,25 +35,29 @@ namespace WebApplication3
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            var requestHeaders = request.ToString();
+            var requestBody = request.Content.ReadAsStringAsync().Result;
 
-            var headers = request.ToString();
-            var body = request.Content.ReadAsStringAsync().Result;
-            var fullRequest = headers + "\r\n\r\n" + body + "\r\n\r\n";
+            var fullRequest = requestHeaders + "\r\n\r\n" + requestBody + "\r\n\r\n";
 
             return base.SendAsync(request, cancellationToken)
                 .ContinueWith(task =>
                 {
-                    var responseHeaders = task.Result.ToString();
-                    var responseBody = task.Result.Content.ReadAsStringAsync().Result;
-
-                    var fullResponse = responseHeaders + "\r\n\r\n" + responseBody;
-
                     var response = task.Result;
 
-                    response.Content = new StringContent(fullRequest + fullResponse);
-                    return response;
-                }, cancellationToken);
+                    if (task.Result.StatusCode == HttpStatusCode.InternalServerError || task.Result.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        var responseHeaders = task.Result.ToString();
+                        var responseBody = task.Result.Content.ReadAsStringAsync().Result;
 
+                        var fullResponse = responseHeaders + "\r\n\r\n" + responseBody;
+
+                        response.Content = new StringContent(fullRequest + fullResponse);
+                    }
+
+                    return response;
+
+                }, cancellationToken);
         }
     }
 

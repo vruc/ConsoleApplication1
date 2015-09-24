@@ -18,14 +18,22 @@ namespace WebApplication3.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            throw new ArgumentNullException("Exception");
-            //return "value";
+            if (id <= 0)
+                throw new ArgumentException("Id");
+            return "value " + id;
         }
 
         // POST api/values
-        public void Post([FromBody]Latlnt value)
+        public HttpResponseMessage Post([FromBody] Latlnt value)
         {
-            throw new ArgumentNullException("value");
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                Created = DateTime.Now
+            }, "application/json");
         }
 
         // PUT api/values/5
