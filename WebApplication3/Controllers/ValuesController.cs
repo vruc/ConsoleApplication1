@@ -12,14 +12,16 @@ namespace WebApplication3.Controllers
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new [] { "value1", "value2" };
         }
 
         // GET api/values/5
         public string Get(int id)
         {
             if (id <= 0)
+            {
                 throw new ArgumentException("Id");
+            }   
             return "value " + id;
         }
 
@@ -30,10 +32,7 @@ namespace WebApplication3.Controllers
             {
                 throw new ArgumentNullException("value");
             }
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-                Created = DateTime.Now
-            }, "application/json");
+            return Request.CreateResponse(HttpStatusCode.OK, new {Created = DateTime.Now}, "application/json");
         }
 
         // PUT api/values/5
